@@ -1,28 +1,68 @@
 # -*- coding: utf-8 -*-
-# @Time    : 2023/7/27 20:29
+# @Time    : 2023/7/28 20:43
 # @Author  : Zhuohui Zhang
-# @File    : transforms.py
+# @File    : action_selectors.py
 # @Software: PyCharm
 # @mail    : zhangzh.grey@gmail.com
 import torch as th
+from torch.distributions import Categorical
+from .epsilon_schedules import DecayThenFlatSchedule
 
 
-class Transform:
-    def transform(self, tensor):
-        raise NotImplementedError
+class MultinomialActionSelector:
+    def __init__(self, args):
+        self.args = args
 
-    def infer_output_info(self, vshape_in, dtype_in):
-        raise NotImplementedError
+        self.schedule = DecayThenFlatSchedule(args.epsilon_start, args.epsilon_finish, args.epsilon_anneal_time,
+                                              decay="linear")
+        self.epsilon = self.schedule.eval(0)
+        self.test_greedy = getattr(args, "test_greedy", True)
+
+    def select_action(self, agent_inputs, avail_actions, t_env, test_mode=False):
+        masked_policies = agent_inputs.clone()
+        masked_policies[avail_actions == 0.0] = 0.0
+        self.epsilon = self.schedule.eval(t_env)
+        if test_mode and self.test_greedy:
+            picked_actions = masked_policies.max(dim=2)[1]
+        else:
+            picked_actions = Categorical(masked_policies).sample().long()
+
+        return picked_actions
 
 
-class OneHot(Transform):
-    def __init__(self, out_dim):
-        self.out_dim = out_dim
+class EpsilonGreedyActionSelector:
 
-    def transform(self, tensor):
-        y_onehot = tensor.new(*tensor.shape[:-1], self.out_dim).zero_()
-        y_onehot.scatter_(-1, tensor.long(), 1)
-        return y_onehot.float()
+    def __init__(self, args):
+        self.args = args
 
-    def infer_output_info(self, vshape_in, dtype_in):
-        return (self.out_dim,), th.float32
+        self.schedule = DecayThenFlatSchedule(args.epsilon_start, args.epsilon_finish, args.epsilon_anneal_time,
+                                              decay="linear")
+        self.epsilon = self.schedule.eval(0)
+
+    def select_action(self, agent_inputs, avail_actions, t_env, test_mode=False):
+        self.epsilon = self.schedule.eval(t_env)
+        if test_mode:
+            self.epsilon = self.args.evaluation_epsilon
+        masked_q_values = agent_inputs.clone()
+        masked_q_values[avail_actions == 0.0] = -float("inf")  # should never be selected!
+        random_numbers = th.rand_like(agent_inputs[:, :, 0])
+        pick_random = (random_numbers < self.epsilon).long()
+        random_actions = Categorical(avail_actions.float()).sample().long()
+        picked_actions = pick_random * random_actions + (1 - pick_random) * masked_q_values.max(dim=2)[1]
+
+        return picked_actions
+
+
+class SoftPoliciesSelector:
+    def __init__(self, args):
+        self.args = args
+
+    def select_action(self, agent_inputs, avail_actions, t_env, test_mode=False):
+        m = Categorical(agent_inputs)
+        picked_actions = m.sample().long()
+        return picked_actions
+
+
+REGISTRY = {"multinomial": MultinomialActionSelector,
+            "epsilon_greedy": EpsilonGreedyActionSelector,
+            "soft_policies": SoftPoliciesSelector}

@@ -9,13 +9,14 @@ import sys
 import gym
 import numpy as np
 from functools import partial
-from smac.env import MultiAgentEnv
-from .smacv1.env import StarCraft2Env
+from smac.env import MultiAgentEnv, StarCraft2Env
+# from .smacv1.env import StarCraft2Env
 # from .smacv1.env import StarCraft2Env, MultiAgentEnv
 # from smacv2.env import StarCraftCapabilityEnvWrapper
 from gym import ObservationWrapper, spaces
 from gym.spaces import flatdim
 from gym.wrappers import TimeLimit as GymTimeLimit
+from .hallway import Join1Env
 
 
 def env_fn(env, **kwargs) -> MultiAgentEnv:
