@@ -1,6 +1,9 @@
-# -*- coding:utf-8 -*-
-# @Time : 2024/12/18 11:01
-# @Author : Zhuohui Zhang
-# @File : __init__.py.py
-# @Project : TGCNet
-# @mail: zhangzh.grey@gmail.com
+# -*- coding: utf-8 -*-
+# @Time    : 2023/7/27 15:13
+# @Author  : Zhuohui Zhang
+# @File    : 2.py.py
+# @Software: PyCharm
+# @mail    : zhangzh.grey@gmail.com
+from .episode_runner import EpisodeRunner
+
+REGISTRY = {"episode": EpisodeRunner,}

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# @Time    : 2023/7/27 15:13
+# @Time    : 2023/7/27 21:49
 # @Author  : Zhuohui Zhang
 # @File    : __init__.py
 # @Software: PyCharm
 # @mail    : zhangzh.grey@gmail.com
-from .tgc_learner import TGCLearner
+from .tgcnet import TGCNet
 
-REGISTRY = {"tgc_learner": TGCLearner,}
 
+REGISTRY = {"tgcnet": TGCNet}

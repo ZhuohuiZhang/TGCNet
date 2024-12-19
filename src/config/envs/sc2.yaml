@@ -1,0 +1,42 @@
+env: sc2
+
+env_args:
+  continuing_episode: False # Whether to consider episodes continuing or finished after time limit is reached (default is False).
+  difficulty: "7" # The difficulty of built-in computer AI bot (default is "7").
+  game_version: null # StarCraft II game version (default is None).
+  map_name: "3m" # The name of the SC2 map to play (default is "8m").
+  move_amount: 2 # How far away units are ordered to move per step (default is 2).
+  obs_all_health: True # Agents receive the health of all units (in the sight range) as part of observations (default is True).
+  obs_instead_of_state: False # Use combination of all agents' observations as the global state (default is False).
+  obs_last_action: False # Agents receive the last actions of all units (in the sight range) as part of observations (default is False).
+  obs_own_health: True # Agents receive their own health as a part of observations (default is False).
+  obs_pathing_grid: False # Whether observations include pathing values surrounding the agent (default is False).
+  obs_terrain_height: False # Whether observations include terrain height values surrounding the agent (default is False).
+  obs_timestep_number: False # Whether observations include the current timestep of the episode (default is False).
+  reward_death_value: 10 # The amount of reward received for killing an enemy unit (default is 10).
+  reward_defeat: 0 # The reward for loosing in an episode (default is 0).
+  reward_negative_scale: 0.5 # Scaling factor for negative rewards (default is 0.5). This parameter is ignored when reward_only_positive == True.
+  reward_only_positive: True # Reward is always positive (default is True).
+  reward_scale: True # Whether to scale the reward (default is True).
+  reward_scale_rate: 20 # Reward scale rate (default is 20).
+  reward_sparse: False # Receive 1/-1 reward for winning/loosing an episode (default is False).
+  reward_win: 200 # The reward for winning in an episode (default is 200).
+  replay_dir: "" # The directory to save replays (default is None).
+  replay_prefix: "" # The prefix of the replay to be saved (default is None).
+  state_last_action: True # Include the last actions of all agents as part of the global state (default is True).
+  state_timestep_number: False # Whether the state include the current timestep of the episode (default is False).
+  step_mul: 8 # How many game steps per agent step (default is 8).
+  seed: null # Random seed used during game initialisation.
+#  sight_range: 9 # Sight range(default is 9).
+#  shoot_range: 6 # Shoot range(default is 6).
+  heuristic_ai: False # Whether to use a non-learning heuristic AI (default False).
+  heuristic_rest: False # At any moment, restrict the actions of the heuristic AI to be chosen from actions available to RL agents (default is False).
+  debug: False # Log messages about observations, state, actions and rewards for debugging purposes (default is False).
+
+test_greedy: True
+test_nepisode: 100
+test_interval: 50000
+log_interval: 50000
+runner_log_interval: 10000
+learner_log_interval: 10000
+t_max: 4050000
