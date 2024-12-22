@@ -1,1 +1,2 @@
 # TGCNet (Transformer-Based Graph Coarsening Network)
+Code for the paper "Bridging Training and Execution via Dynamic Directed Graph-Based Communication in Cooperative Multi-Agent Systems" accepted at AAAI 2025. TGNet is is implemented in PyTorch and tested on challenging tasks SMAC, LBF and Hallway as benchmarks, which is based on EPyMARL.
