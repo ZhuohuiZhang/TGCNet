@@ -59,8 +59,6 @@ class EpisodeRunner:
                 "state": [self.env.get_state()],
                 "avail_actions": [self.env.get_avail_actions()],
                 "obs": [self.env.get_obs()],
-                # "visibility": [self.env.get_visibility_matrix()[:, 0:self.args.n_agents] + np.eye(
-                #     self.args.n_agents, dtype=bool)] if self.args.env == "sc2" else None,
             }
             self.batch.update(pre_transition_data, ts=self.t)
             actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)

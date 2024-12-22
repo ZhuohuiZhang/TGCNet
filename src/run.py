@@ -104,11 +104,6 @@ def run_sequential(args, logger):
         },
         "reward": {"vshape": (1,)},
         "terminated": {"vshape": (1,), "dtype": torch.uint8},
-        "visibility": {
-            "vshape": (env_info["n_agents"],),
-            "group": "agents",
-            "dtype": torch.bool,
-        },
     }
     groups = {"agents": args.n_agents}
     preprocess = {"actions": ("actions_onehot", [OneHot(out_dim=args.n_actions)])}
@@ -199,10 +194,7 @@ def run_sequential(args, logger):
 
             if episode_sample.device != args.device:
                 episode_sample.to(args.device)
-            if args.name == "atgan":
-                learner.train(episode_sample, runner.t_env, runner.env, episode)
-            else:
-                learner.train(episode_sample, runner.t_env, episode)
+            learner.train(episode_sample, runner.t_env, episode)
         # Execute test runs once in a while
         n_test_runs = max(1, args.test_nepisode // runner.batch_size)
         if (runner.t_env - last_test_T) / args.test_interval >= 1.0:

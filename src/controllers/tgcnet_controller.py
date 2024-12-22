@@ -32,8 +32,7 @@ class TGCNetMAC:
     def forward(self, ep_batch, t, test_mode=False):
         agent_inputs = self._build_inputs(ep_batch, t)
         avail_actions = ep_batch["avail_actions"][:, t]
-        visibility = ep_batch["visibility"][:, t]
-        agent_outs, self.hidden_states, weights = self.agent(agent_inputs, self.hidden_states, visibility)
+        agent_outs, self.hidden_states, weights = self.agent(agent_inputs, self.hidden_states)
 
         # Softmax the agent outputs if they're policy logits
         if self.agent_output_type == "pi_logits":
