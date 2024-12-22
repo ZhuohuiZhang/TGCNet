@@ -20,7 +20,7 @@ obs_agent_id: True
 obs_last_action: False
 obs_individual_obs: False
 
-# use the Q_Learner to train
+# use the TGC_Learner to train
 standardise_returns: False
 standardise_rewards: True
 
