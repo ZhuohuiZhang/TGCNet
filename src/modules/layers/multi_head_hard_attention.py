@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2023/12/29 20:57
 # @Author  : Zhuohui Zhang
-# @File    : mutil_head_hard_attention.py
+# @File    : multi_head_hard_attention.py
 # @Software: PyCharm
 # @mail    : zhangzh.grey@gmail.com
 import torch

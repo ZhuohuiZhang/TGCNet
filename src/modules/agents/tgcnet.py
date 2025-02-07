@@ -7,7 +7,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from modules.layers.mutil_head_hard_attention import MultiHeadHardAttention
+from modules.layers.multi_head_hard_attention import MultiHeadHardAttention
 from modules.layers.transformer_decoder import TransformerDecoder
 
 

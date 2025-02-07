@@ -5,7 +5,7 @@
 # @Software: PyCharm
 # @mail    : zhangzh.grey@gmail.com
 import torch.nn as nn
-from modules.layers.mutil_head_attention import MultiHeadAttention
+from modules.layers.multi_head_attention import MultiHeadAttention
 from modules.layers.add_norm import AddNorm
 from modules.layers.position_wise_ffn import PositionWiseFFN
 

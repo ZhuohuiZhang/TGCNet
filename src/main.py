@@ -92,7 +92,7 @@ if __name__ == '__main__':
             assert False, "default.yaml error: {}".format(exc)
 
     # Load algorithm and env base configs/
-    env_config = _get_config(params, "--env-config", "envs")  # "envs" ./config/envs
+    env_config = _get_config(params, "--env-config", "env")  # "env" ./config/env
     alg_config = _get_config(params, "--alg-config", "algs")  # "algs" ./config/algs
     config_dict = recursive_dict_update(config_dict, env_config)
     config_dict = recursive_dict_update(config_dict, alg_config)
