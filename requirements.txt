@@ -1,7 +1,10 @@
+torch
+torchvision
+torch_scatter
+numpy
+sacred
 gym==0.26.2
-numpy==1.24.1
-PyYAML==6.0.2
-SMAC==1.0.0
-tensorboard_logger==0.1.0
-torch==2.1.2+cu118
-torch_scatter==2.1.2+pt21cu118
+PyYAML
+einops
+tensorboard_logger
+git+https://github.com/oxwhirl/smac.git
